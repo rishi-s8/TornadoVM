@@ -18,11 +18,15 @@
 package uk.ac.manchester.tornado.annotation;
 
 import jdk.vm.ci.meta.ResolvedJavaMethod;
-import org.objectweb.asm.*;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 import uk.ac.manchester.tornado.runtime.ASMClassVisitorProvider;
 import uk.ac.manchester.tornado.runtime.common.ParallelAnnotationProvider;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +47,32 @@ public class ASMClassVisitor extends ClassVisitor implements ASMClassVisitorProv
     @Override
     public MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
         if (name.equals(resolvedJavaMethod.getName()) && descriptor.equals(resolvedJavaMethod.getSignature().toMethodDescriptor())) {
+            String declClassName = resolvedJavaMethod.getDeclaringClass().getName().replaceAll("/", ".");
+            signature = "<" +
+                    declClassName.substring(1, declClassName.length()-1) +
+                    ": " + resolvedJavaMethod.getName() + descriptor + ">";
+            System.out.println("Constructed Signature: " + signature);
+            FileInputStream is;
+            ObjectInputStream ois;
+            AnnotationMap annotationMap = null;
+            try {
+                is = new FileInputStream("auto-tornado/annotationMap");
+                ois = new ObjectInputStream(is);
+                annotationMap = (AnnotationMap) ois.readObject();
+                ois.close();
+                is.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (annotationMap == null) {
+                System.out.println("annotationMap object is null.");
+            } else if (annotationMap.annotations.containsKey(signature)) {
+                parallelAnnotations.addAll(annotationMap.annotations.get(signature));
+            }
             return new ASMMethodVisitor(api, cv.visitMethod(access, name, descriptor, signature, exceptions), parallelAnnotations);
         }
         return null;

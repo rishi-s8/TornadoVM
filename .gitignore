@@ -46,8 +46,10 @@ bin/sdk
 *.swp
 *.pyc
 **/*.iml
-.idea/*
+**/.idea/*
 *.factorypath
 .unittestingStatus
 *dependency-reduced-pom.xml
 graalJars/
+**/sootOutput/*
+etc/sources.env

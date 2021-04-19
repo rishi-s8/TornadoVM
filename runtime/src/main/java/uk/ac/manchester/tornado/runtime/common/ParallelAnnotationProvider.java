@@ -23,7 +23,9 @@
  */
 package uk.ac.manchester.tornado.runtime.common;
 
-public interface ParallelAnnotationProvider {
+import java.io.Serializable;
+
+public interface ParallelAnnotationProvider extends Serializable {
 
     public int getStart();
 

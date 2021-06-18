@@ -53,3 +53,6 @@ bin/sdk
 graalJars/
 **/sootOutput/*
 etc/sources.env
+auto-tornado/libz3java.so
+auto-tornado/libz3.so
+sources.env

@@ -1,20 +1,3 @@
-public class TestClass {
-    public int field1 = 10;
-    public TestClass tc;
-
-    public void modifyField(int f) {
-        this.field1 = f;
-    }
-
-    public int returnField() {
-        return this.field1;
-    }
-}
-
-interface lambdaExp {
-    int lambdaFun(int val);
-}
-
 public class TestCode {
 
     public static int globalvar1 = 50;
@@ -39,18 +22,6 @@ public class TestCode {
         objMethodCall(obj1, var1);
         int e = callPureFun(var1);
         int f = callImpureFun(var1);
-        int g = useLambdaFun(var1, (val) -> {
-            int x = 2;
-            return val + x;
-        });
-        int h = useLambdaFun(var1, (val) -> {
-            int y = 2;
-            gvModify(y);
-            int z = gvAccess(val);
-            return z + globalvar1;
-        });
-        nonAssignmentStmt(globalvar1 - 10);
-
     }
 
     // Function performing I/O operation
@@ -124,12 +95,5 @@ public class TestCode {
         int b = val + a;
         int c = gvAccess(b) + val;
         return c;
-    }
-
-    // A function to invoke a given lambda function
-    static int useLambdaFun(int val, lambdaExp lFun) {
-        int a = 2;
-        int b = lFun.lambdaFun(val);
-        return a + b;
     }
 }

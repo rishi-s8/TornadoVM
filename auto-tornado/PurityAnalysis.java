@@ -10,7 +10,8 @@ import java.util.Iterator;
 import java.util.*;
 
 class PurityAnalysis {
-    private final boolean verbose;
+    static boolean verbose;
+    static PurityAnalysis paObject = null;
     private final CallGraph cg;
     private final GeomPointsTo pta;
 
@@ -18,11 +19,16 @@ class PurityAnalysis {
     private final List<SootMethod> methodTopologicalSortedList;
     private final Map<SootMethod, PurityInfo> methodPurityInfoMap;
 
-    public PurityAnalysis() {
-        this(false);
+    public static void setVerbose(boolean boolValue) { verbose = boolValue; };
+
+    public static PurityAnalysis v() {
+        if (paObject == null) {
+            paObject = new PurityAnalysis(verbose);
+        }
+        return paObject;
     }
 
-    public PurityAnalysis(boolean verbose) {
+    private PurityAnalysis(boolean verbose) {
         this.verbose = verbose;
         methodTopologicalSortedList = new ArrayList<>();
         methodPurityInfoMap = new HashMap<>();

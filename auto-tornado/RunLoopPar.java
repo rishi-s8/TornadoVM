@@ -59,7 +59,8 @@ class LoopPar extends SceneTransformer {
     protected void internalTransform(String arg0, Map<String, String> arg1) {
         System.out.println("Starting analysis. MainClass: " + Scene.v().getMainClass());
         cg = Scene.v().getCallGraph();
-        purityAnalysis = new PurityAnalysis(true);
+        PurityAnalysis.setVerbose(true);
+        purityAnalysis = PurityAnalysis.v();
 
         for (SootMethod mainMethod : Scene.v().getMainClass().getMethods()) {
             if (!(mainMethod.isStaticInitializer() || mainMethod.isPhantom() || mainMethod.isConstructor() || mainMethod.isJavaLibraryMethod()))

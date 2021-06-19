@@ -1,33 +1,32 @@
 /*
  * Copyright (c) 2013-2020, APT Group, Department of Computer Science,
  * The University of Manchester.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *    http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package uk.ac.manchester.tornado.examples;
 
-import java.util.stream.IntStream;
-
 import uk.ac.manchester.tornado.api.Policy;
 import uk.ac.manchester.tornado.api.TaskSchedule;
-import uk.ac.manchester.tornado.api.annotations.Parallel;
 import uk.ac.manchester.tornado.examples.common.Messages;
+
+import java.util.stream.IntStream;
 
 public class Saxpy {
 
     public static void saxpy(float alpha, float[] x, float[] y) {
-        for (@Parallel int i = 0; i < y.length; i++) {
+        for (int i = 0; i < y.length; i++) {
             y[i] = alpha * x[i];
         }
     }

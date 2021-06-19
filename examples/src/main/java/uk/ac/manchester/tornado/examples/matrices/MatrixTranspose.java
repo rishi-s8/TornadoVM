@@ -17,20 +17,19 @@
  */
 package uk.ac.manchester.tornado.examples.matrices;
 
+import uk.ac.manchester.tornado.api.TaskSchedule;
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
-
-import uk.ac.manchester.tornado.api.TaskSchedule;
-import uk.ac.manchester.tornado.api.annotations.Parallel;
 
 public class MatrixTranspose {
 
     private static final int WARMING_UP_ITERATIONS = 15;
 
     private static void matrixTranspose(final float[] A, float[] B, final int size) {
-        for (@Parallel int i = 0; i < size; i++) {
-            for (@Parallel int j = 0; j < size; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 B[(i * size) + j] = A[(j * size) + i];
             }
         }

@@ -56,5 +56,5 @@ etc/sources.env
 auto-tornado/libz3java.so
 auto-tornado/libz3.so
 sources.env
-auto-tornado/annotationMap
-auto-tornado/annotationMap.bak
+**/annotationMap*
+

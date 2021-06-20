@@ -18,6 +18,7 @@
 package uk.ac.manchester.tornado.examples.stencils;
 
 import uk.ac.manchester.tornado.api.TaskSchedule;
+import uk.ac.manchester.tornado.api.annotations.Parallel;
 
 import java.util.Random;
 
@@ -111,13 +112,13 @@ public class Convolution2D {
         StringBuilder se = new StringBuilder();
         StringBuilder par = new StringBuilder();
 
-        for (int i = 0; i < iterations; i++) {
-            System.gc();
-            start = System.nanoTime();
-            bSeq = run2DConvolutionSequential(size, size, aSeq, bSeq);
-            end = System.nanoTime();
-            se.append("Sequential execution time of iteration is: " + (end - start) + " ns \n");
-        }
+//        for (int i = 0; i < iterations; i++) {
+//            System.gc();
+//            start = System.nanoTime();
+//            bSeq = run2DConvolutionSequential(size, size, aSeq, bSeq);
+//            end = System.nanoTime();
+//            se.append("Sequential execution time of iteration is: " + (end - start) + " ns \n");
+//        }
 
         // @formatter:off
         final TaskSchedule graph = new TaskSchedule("s0")
@@ -134,7 +135,7 @@ public class Convolution2D {
 
         System.out.println(se);
         System.out.println(par);
-        System.out.println("Verify : " + verify(b, bSeq, size));
+//        System.out.println("Verify : " + verify(b, bSeq, size));
     }
 
     private static boolean verify(float[] tornado, float[] serial, int size) {

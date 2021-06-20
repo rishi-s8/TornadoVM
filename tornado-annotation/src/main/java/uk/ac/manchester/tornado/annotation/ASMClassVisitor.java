@@ -49,9 +49,9 @@ public class ASMClassVisitor extends ClassVisitor implements ASMClassVisitorProv
         if (name.equals(resolvedJavaMethod.getName()) && descriptor.equals(resolvedJavaMethod.getSignature().toMethodDescriptor())) {
             String declClassName = resolvedJavaMethod.getDeclaringClass().getName().replaceAll("/", ".");
             signature = "<" +
-                    declClassName.substring(1, declClassName.length()-1) +
+                    declClassName.substring(1, declClassName.length() - 1) +
                     ": " + resolvedJavaMethod.getName() + descriptor + ">";
-            System.out.println("Constructed Signature: " + signature);
+//            System.out.println("Constructed Signature: " + signature);
             FileInputStream is;
             ObjectInputStream ois;
             AnnotationMap annotationMap = null;
@@ -61,16 +61,13 @@ public class ASMClassVisitor extends ClassVisitor implements ASMClassVisitorProv
                 annotationMap = (AnnotationMap) ois.readObject();
                 ois.close();
                 is.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            } catch (FileNotFoundException ignored) {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            if (annotationMap == null) {
-                System.out.println("annotationMap object is null.");
-            } else if (annotationMap.annotations.containsKey(signature)) {
+            if (annotationMap != null && annotationMap.annotations.containsKey(signature)) {
                 parallelAnnotations.addAll(annotationMap.annotations.get(signature));
             }
             return new ASMMethodVisitor(api, cv.visitMethod(access, name, descriptor, signature, exceptions), parallelAnnotations);

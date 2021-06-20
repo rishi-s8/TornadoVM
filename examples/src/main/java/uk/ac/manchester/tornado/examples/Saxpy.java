@@ -19,7 +19,6 @@ package uk.ac.manchester.tornado.examples;
 
 import uk.ac.manchester.tornado.api.Policy;
 import uk.ac.manchester.tornado.api.TaskSchedule;
-import uk.ac.manchester.tornado.examples.common.Messages;
 
 import java.util.stream.IntStream;
 
@@ -49,31 +48,31 @@ public class Saxpy {
 
         s0.executeWithProfilerSequentialGlobal(Policy.PERFORMANCE);
 
-        numElements = 512 * 2;
+//        numElements = 512 * 2;
+//
+//        final float[] a = new float[numElements];
+//        final float[] b = new float[numElements];
+//
+//        IntStream.range(0, numElements).parallel().forEach(i -> a[i] = 450);
+//
+//        TaskSchedule s1 = new TaskSchedule("s1").task("t0", Saxpy::saxpy, alpha, a, b).streamOut(a);
+//
+//        s1.executeWithProfilerSequentialGlobal(Policy.PERFORMANCE);
+//
+//        s1.executeWithProfilerSequentialGlobal(Policy.PERFORMANCE);
 
-        final float[] a = new float[numElements];
-        final float[] b = new float[numElements];
-
-        IntStream.range(0, numElements).parallel().forEach(i -> a[i] = 450);
-
-        TaskSchedule s1 = new TaskSchedule("s1").task("t0", Saxpy::saxpy, alpha, a, b).streamOut(a);
-
-        s1.executeWithProfilerSequentialGlobal(Policy.PERFORMANCE);
-
-        s1.executeWithProfilerSequentialGlobal(Policy.PERFORMANCE);
-
-        boolean wrongResult = false;
-        for (int i = 0; i < y.length; i++) {
-            if (Math.abs(y[i] - (alpha * x[i])) > 0.01) {
-                wrongResult = true;
-                break;
-            }
-        }
-        if (!wrongResult) {
-            System.out.println(Messages.CORRECT);
-        } else {
-            System.out.println(Messages.WRONG);
-        }
+//        boolean wrongResult = false;
+//        for (int i = 0; i < y.length; i++) {
+//            if (Math.abs(y[i] - (alpha * x[i])) > 0.01) {
+//                wrongResult = true;
+//                break;
+//            }
+//        }
+//        if (!wrongResult) {
+//            System.out.println(Messages.CORRECT);
+//        } else {
+//            System.out.println(Messages.WRONG);
+//        }
     }
 
 }

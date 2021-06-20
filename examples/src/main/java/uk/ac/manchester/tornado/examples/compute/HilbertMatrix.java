@@ -23,8 +23,8 @@ import uk.ac.manchester.tornado.api.TaskSchedule;
 public class HilbertMatrix {
 
     private static final boolean CHECK_RESULT = true;
-    private static int NROWS = 1024;
-    private static int NCOLS = 1024;
+    private static int NROWS = 1024000;
+    private static int NCOLS = 1024000;
 
     public static void hilberComputation(float[] output, int rows, int cols) {
         for (int i = 0; i < rows; i++) {
@@ -35,6 +35,9 @@ public class HilbertMatrix {
     }
 
     public static void main(String[] args) {
+        int N = Integer.parseInt(args[0]);
+        NROWS = N;
+        NCOLS = N;
         float[] output = new float[NROWS * NCOLS];
 
         // @formatter:off
